@@ -1,0 +1,13 @@
+package sv.edu.udb.parcial3.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import sv.edu.udb.parcial3.repository.entity.Booking;
+
+import java.util.List;
+
+public interface BookingRepository extends JpaRepository<Booking, Long> {
+    @Query("SELECT b FROM Booking b WHERE b.usuario.idUser = :usuarioId")
+    List<Booking> reservasPorusuario(@Param("usuarioId") Integer id);
+}

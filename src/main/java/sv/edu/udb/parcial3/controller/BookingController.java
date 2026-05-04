@@ -25,7 +25,7 @@ public class BookingController {
 
     @PostMapping
     public BookingResponse registrarReserva(@RequestBody BookingRequest reserva){
-        return bookingService.registrarReserva(1L, reserva);
+        return bookingService.registrarReserva(reserva);
     }
 
     @DeleteMapping("/{id}")

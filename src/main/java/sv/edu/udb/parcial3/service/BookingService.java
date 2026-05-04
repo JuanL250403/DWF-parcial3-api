@@ -42,15 +42,16 @@ public class BookingService {
         return bookingMapper.toBookingResponseList(reservas);
     }
 
-    public BookingResponse registrarReserva(Long usuarioId, BookingRequest reserva) {
+    public BookingResponse registrarReserva(BookingRequest reserva) {
         int cantidadReserva = reserva.getCantidad();
         Event evento = eventRepository.findById(reserva.getEventoId()).orElseThrow(() -> new EntityNotFoundException("Evento no encontrado"));
 
         if (evento.getCapacidad() < cantidadReserva) {
-            throw new DisponibilidadSuperadaException("La cantidad de entradas solicitadas supera a la cpacidad del evento");
+            throw new DisponibilidadSuperadaException("La cantidad de entradas solicitadas supera la cpacidad del evento");
         }
 
-        User usuario = userRepository.findById(usuarioId).orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
+        User usuarioReservando = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User usuario = userRepository.findById( usuarioReservando.getIdUser()).orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
 
         double precioPorTicket = evento.getPrecioPorTicket();
         Booking reservaCrear = Booking.builder()

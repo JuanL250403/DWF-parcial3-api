@@ -22,15 +22,16 @@ public class Event {
     @Column(name = "id_event")
     private Long id;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, length = 50)
     private  String titulo;
 
+    @Column(length = 255)
     private String descripcion;
 
     @Column(nullable = false)
     private LocalDateTime fechaEvento;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 125)
         private String direccion;
 
     @Column(nullable = false)

@@ -17,5 +17,4 @@ public interface BookingMapper {
     @Mapping(source = "evento.titulo", target = "evento")
     BookingResponse toBookingResponse(Booking reserva);
 
-
 }

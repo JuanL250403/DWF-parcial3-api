@@ -1,5 +1,6 @@
 package sv.edu.udb.parcial3.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,12 +21,12 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody AuthRequest authRequest) {
+    public AuthResponse login(@Valid @RequestBody AuthRequest authRequest) {
         return authService.generarToken(authRequest);
     }
 
     @PostMapping("/register")
-    public UserResponse registrarUsario(@RequestBody UserRequest usuario) {
+    public UserResponse registrarUsario(@Valid @RequestBody UserRequest usuario) {
         return userService.registrarUsuario(usuario);
     }
 }

@@ -1,5 +1,6 @@
 package sv.edu.udb.parcial3.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import sv.edu.udb.parcial3.controller.request.EventRequest;
@@ -20,17 +21,17 @@ public class EventController {
     }
 
     @GetMapping("/{id}")
-    public EventResponse obtenerEvento(@PathVariable("id") Long id) {
+    public EventResponse obtenerEvento(@Valid @PathVariable("id") Long id) {
         return eventService.obtenerEvento(id);
     }
 
     @PostMapping
-    public EventResponse registrarEvento(@RequestBody EventRequest evento) {
+    public EventResponse registrarEvento(@Valid @RequestBody EventRequest evento) {
         return eventService.registrarEvneto(evento);
     }
 
     @PutMapping("/{id}")
-    public EventResponse modificarEvento(@PathVariable("id") Long id, @RequestBody EventRequest evento) {
+    public EventResponse modificarEvento(@Valid @PathVariable("id") Long id, @RequestBody EventRequest evento) {
         return eventService.modificarEvento(id, evento);
     }
 

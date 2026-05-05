@@ -1,5 +1,6 @@
 package sv.edu.udb.parcial3.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,7 +25,7 @@ public class BookingController {
     }
 
     @PostMapping
-    public BookingResponse registrarReserva(@RequestBody BookingRequest reserva){
+    public BookingResponse registrarReserva(@Valid @RequestBody BookingRequest reserva){
         return bookingService.registrarReserva(reserva);
     }
 

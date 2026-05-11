@@ -79,5 +79,11 @@ public class BookingService {
 
         reservaCancelar.setEstatus(StatusBooking.CANCELADA);
         bookingRepository.save(reservaCancelar);
+
+        Event evento = reservaCancelar.getEvento();
+        evento.setCapacidad(evento.getCapacidad() + reservaCancelar.getCantidad());
+        eventRepository.save(evento);
+
+        bookingRepository.save(reservaCancelar);
     }
 }

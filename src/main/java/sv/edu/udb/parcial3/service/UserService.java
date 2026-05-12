@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sv.edu.udb.parcial3.controller.request.UserRequest;
 import sv.edu.udb.parcial3.controller.response.UserResponse;
+import sv.edu.udb.parcial3.exception.CorreoExistenteException;
+import sv.edu.udb.parcial3.exception.UsuarioExistenteException;
 import sv.edu.udb.parcial3.repository.UserRepository;
 import sv.edu.udb.parcial3.repository.entity.User;
 import sv.edu.udb.parcial3.service.mapper.UserMapper;
@@ -29,6 +31,12 @@ public class UserService {
     }
 
     public UserResponse registrarUsuario(UserRequest usuario) {
+        if(userRepository.existsUserByUsername(usuario.getNombreUsuario())){
+            throw new UsuarioExistenteException("Ya existe un usuario con ese nombre");
+        } else if (userRepository.existsUserByEmail(usuario.getEmail())){
+            throw  new CorreoExistenteException("El correo ya esta en uso");
+        }
+
         User usuarioCrear = userMapper.toUser(usuario);
         usuarioCrear.setPassword(passwordEncoder.encode(usuario.getContrasenia()));
         User usuarioCreado = userRepository.save(usuarioCrear);

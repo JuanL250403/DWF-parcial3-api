@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -22,6 +23,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import org.springframework.web.util.WebUtils;
 import sv.edu.udb.parcial3.config.web.ApiError;
 import sv.edu.udb.parcial3.config.web.ApiErrorWraper;
+import sv.edu.udb.parcial3.exception.CorreoExistenteException;
+import sv.edu.udb.parcial3.exception.UsuarioExistenteException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -43,6 +46,21 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({EntityNotFoundException.class})
     protected ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex, WebRequest request) {
         return handleExceptionInternal(ex, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler({BadCredentialsException.class})
+    protected ResponseEntity<Object> handleBadCredentials(BadCredentialsException ex, WebRequest request) {
+        return handleExceptionInternal(ex, new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
+    }
+
+    @ExceptionHandler({UsuarioExistenteException.class})
+    protected ResponseEntity<Object> handleUsuarioExistente(UsuarioExistenteException ex, WebRequest request) {
+        return handleExceptionInternal(ex, new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
+    @ExceptionHandler({CorreoExistenteException.class})
+    protected ResponseEntity<Object> handleUsuarioExistente(CorreoExistenteException ex, WebRequest request) {
+        return handleExceptionInternal(ex, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
     @ExceptionHandler(DataAccessException.class)

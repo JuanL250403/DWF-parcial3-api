@@ -48,7 +48,7 @@ public class JwtService {
         return (userName.equals(userDetails.getUsername()) && !tokenExpirado(token));
     }
 
-    private boolean tokenExpirado(String token){
+    public boolean tokenExpirado(String token){
         Date expiracion = extractExpiracion(token);
         return expiracion.before(new Date());
     }

@@ -6,8 +6,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import sv.edu.udb.parcial3.controller.request.AuthRefreshRequest;
 import sv.edu.udb.parcial3.controller.request.AuthRequest;
 import sv.edu.udb.parcial3.controller.request.UserRequest;
+import sv.edu.udb.parcial3.controller.response.AuthRefreshResponse;
 import sv.edu.udb.parcial3.controller.response.AuthResponse;
 import sv.edu.udb.parcial3.controller.response.UserResponse;
 import sv.edu.udb.parcial3.service.AuthService;
@@ -39,5 +41,10 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponse registrarUsario(@Valid @RequestBody UserRequest usuario) {
         return userService.registrarUsuario(usuario);
+    }
+
+    @PostMapping("/refresh")
+    public AuthRefreshResponse refresacarToken(@RequestBody AuthRefreshRequest authRefreshResponse) {
+        return authService.refrescarToken(authRefreshResponse);
     }
 }
